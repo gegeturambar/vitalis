@@ -1,0 +1,15 @@
+#AppBundle\Entity\User:
+#    user1:
+#        username: user
+#        password: $2y$12$uTvHW6aNJW64lnz1h3UE7uQcCad1muwjwX6MYFVx0T4ygk40usnUm
+#        email: bob@gmail.com
+#        state: 1
+#        lastConnection: <DateTimeThisYear()>
+#       role: "@role1"
+#    user2:
+#        username: admin
+#        password: password
+#        email: gege@gmail.com
+#        state: 1
+#        lastConnection: <DateTimeThisYear()>
+#        role: "@role2"

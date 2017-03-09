@@ -7,3 +7,41 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name : twig.extension }
+
+
+    app.services.userhandler:
+        class: AppBundle\Service\Handler\UserHandler
+        arguments: [ '@doctrine','@security.password_encoder' ]
+
+
+    app.services.handler:
+            class: AppBundle\Service\Handler\FormHandler
+            arguments: [ '@doctrine','@app.services.utils.string' ]
+
+    app.services.subscriber.authentification:
+                        class: AppBundle\Service\Subscriber\AuthentificationSubscriber
+                        arguments:  [ '@doctrine', '@session', '@mailer', '%max_authentification_failure%' ]
+                        tags:
+                            - { name: kernel.event_subscriber }
+
+
+    app.services.listener.parameter:
+        class: AppBundle\Listener\ParameterListener
+        arguments: ['@app.services.utils.string', '%upload_dir%']
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
+
+
+    app.services.utils.upload:
+            class: AppBundle\Service\Utils\UploadUtils
+            arguments: [ '@app.services.utils.string', '%upload_dir%' ]
+
+    app.services.utils.string:
+            class: AppBundle\Service\Utils\StringUtils
+            arguments: [ ]

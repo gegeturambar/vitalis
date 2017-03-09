@@ -1,0 +1,51 @@
+{% extends 'base.admin.html.twig' %}
+
+{% block body %}
+
+    {{ dump(form) }}
+    {% set action = form.vars.value.id %}
+
+
+
+
+    <h2>{{ 'parameter.parameter' | trans }}</h2>
+    {# debut du formulaire #}
+    {{ form_start(form, { 'attr':{ 'novalidate':'novalidate'} } ) }}
+
+    <p>
+        {{ form_label(form.name, 'firstname' | trans | capitalize ~ ':' ) }}
+        {{ form_widget(form.name) }}
+    </p>
+
+    <p>
+        {{ form_label(form.value, 'value' | trans | capitalize ~ ':' ) }}
+        {{ form_widget(form.value) }}
+    </p>
+
+    <p>
+        {{ form_label(form.isImage, 'isImage' | trans | capitalize ~ ':' ) }}
+        {{ form_widget(form.isImage) }}
+    </p>
+
+    {% if form.lastmodification is defined %}
+    <p>
+        {{ form_widget(form.lastmodification) }}
+    </p>
+    {% endif %}
+
+    {%  set buttontext = 'submit.parameter' | trans({}, 'forms') %}
+
+    {% if action is not null %}
+        <input type="submit" value="{{ 'submit.update' | trans({'%value%' : buttontext},'forms') }}">
+    {% else %}
+        <input type="submit" value="{{ 'submit.create' | trans({'%value%' : buttontext},'forms') }}">
+    {% endif %}
+
+    {{ form_errors(form.name) }}
+    {# fin du formulaire #}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

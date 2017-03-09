@@ -1,0 +1,5 @@
+AppBundle\Entity\Role:
+    role1:
+        name: ROLE_USER
+    role2:
+        name: ROLE_ADMIN
