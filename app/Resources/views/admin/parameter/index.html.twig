@@ -11,13 +11,17 @@
                     <th>{{ 'parameter.update' | trans | capitalize }}</th>
                     <th>{{ 'parameter.delete' | trans | capitalize }}</th>
                     {% for param in records %}
-                        {{  dump(param) }}
+
                         <tr class="parameter" id="parameter_{{ param.id }}">
                             <td>
                                 {{ param.name }}
                             </td>
                             <td>
-                                {{ param.value }}
+                                {% if(param.isImage) %}
+                                    <img src="{{ path_upload }}{{ param.value }}" \>
+                                {% else %}
+                                    {{ param.value }}
+                                {% endif %}
                             </td>
                             <td>
                                 {{ param.lastmodification | localizeddate }}

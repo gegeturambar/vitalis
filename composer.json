@@ -68,5 +68,6 @@
             "file": "app/config/parameters.yml"
         },
         "branch-alias": null
+
     }
 }

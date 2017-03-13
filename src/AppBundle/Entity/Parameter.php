@@ -33,7 +33,7 @@ class Parameter
     private $name;
 
     /**
-     * @ORM\Column(name="value", type="string", length=255)
+     * @ORM\Column(name="value", type="string", length=255,nullable=true)
      */
     private $value;
 

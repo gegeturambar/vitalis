@@ -31,6 +31,7 @@ class ParameterController extends Controller
 
     /**
      * @Route("/form", name="app.admin.parameter.form")
+     * @Route("/form/update/{id}", name="app.admin.parameter.form.update",requirements={"id"="\d+"})
      */
     public function formAction(Request $request, $id = null){
 
@@ -57,13 +58,13 @@ class ParameterController extends Controller
 
             if($formHandler->process()) {
                 $msgType = 'notice';
-                $msg = is_null($id) ? ucfirst($this->get('translator')->trans("actor.flash_messages.add")) : ucfirst($this->get('translator')->trans("actor.flash_messages.update"));
+                $msg = is_null($id) ? ucfirst($this->get('translator')->trans("parameter.flash_messages.add")) : ucfirst($this->get('translator')->trans("actor.flash_messages.update"));
             }else{
                 $msgType = 'error';
-                $msg = is_null($id) ? ucfirst($this->get('translator')->trans("actor.flash_messages.add")) : ucfirst($this->get('translator')->trans("actor.flash_messages.update"));
+                $msg = is_null($id) ? ucfirst($this->get('translator')->trans("parameter.flash_messages.add")) : ucfirst($this->get('translator')->trans("actor.flash_messages.update"));
             }
             $this->addFlash($msgType,$msg);
-            return $this->redirectToRoute('app.admin.actor.index');
+            return $this->redirectToRoute('app.admin.parameter.index');
         }
 
         // envoi du formulaire sous form de html
@@ -71,4 +72,38 @@ class ParameterController extends Controller
 
         ));
     }
+
+    /**
+     * @Route("/form/delete/{id}", name="app.admin.parameter.form.delete",requirements={"id"="\d+"})
+     */
+    public function deleteAction(Request $request,$id = null)
+    {
+        $doctrine = $this->getDoctrine();
+
+        // pour INSERT, DELETE, UPDATE
+        $em  = $doctrine->getManager();
+
+        // Pour select
+        $rc = $doctrine->getRepository("AppBundle:Parameter");
+
+        // create form
+        $entity = $rc->find($id);
+
+        $formHandler = $this->get('app.services.handler');
+
+        if($formHandler->delete($entity)){
+            $msgtype = "notice";
+            $msg = ucfirst($this->get('translator')->trans("parameter.flash_messages.delete"));
+        }else{
+            $msgtype = "error";
+            $msg = ucfirst($this->get('translator')->trans("parameter.flash_messages.delete_fail"));
+
+        }
+        /*
+
+         */
+        $this->addFlash($msgtype,$msg);
+        return $this->redirectToRoute('app.admin.parameter.index');
+    }
+
 }

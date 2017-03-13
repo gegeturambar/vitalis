@@ -8,7 +8,8 @@ imports:
 parameters:
     locale: fr
     max_authentification_failure: 3
-    upload_dir: upload/
+    upload_dir: '%kernel.root_dir%/../web/upload/'
+
 
 framework:
     #esi:             ~
@@ -40,6 +41,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      path_upload: '/upload/'
 
 # Doctrine Configuration
 doctrine:

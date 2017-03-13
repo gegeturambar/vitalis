@@ -2,7 +2,6 @@
 
 {% block body %}
 
-    {{ dump(form) }}
     {% set action = form.vars.value.id %}
 
 
@@ -40,6 +39,8 @@
     {% else %}
         <input type="submit" value="{{ 'submit.create' | trans({'%value%' : buttontext},'forms') }}">
     {% endif %}
+
+    <button onclick="history.back()" type="button">{{ 'cancel' | trans({'%value%' : buttontext},'forms') }}</button>
 
     {{ form_errors(form.name) }}
     {# fin du formulaire #}
