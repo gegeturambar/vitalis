@@ -45,3 +45,20 @@ services:
     app.services.utils.string:
             class: AppBundle\Service\Utils\StringUtils
             arguments: [ ]
+
+
+    app.services.utils.mail:
+                class: AppBundle\Service\Utils\MailUtils
+                arguments: [ '@twig','@mailer' ]
+
+    app.services.utils.xmlRecord:
+            class: AppBundle\Service\Utils\XmlRecordUtils
+            arguments: [ '@app.services.utils.mail' ]
+
+    app.services.utils.file:
+            class: AppBundle\Service\Utils\FileUtils
+            arguments: [ '@doctrine','@app.services.utils.xmlRecord' ]
+
+    app.services.utils.directory:
+        class: AppBundle\Service\Utils\DirectoryUtils
+        arguments: [ '@app.services.utils.file' ]

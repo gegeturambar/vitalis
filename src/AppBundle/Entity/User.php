@@ -4,15 +4,17 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="fos_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User implements UserInterface
+class User extends BaseUser
 {
+
     /**
      * @var int
      *
@@ -20,19 +22,63 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Site", mappedBy="user")
+     */
+    protected $sites;
+
+    /**
+     * @return mixed
+     */
+    public function getSites()
+    {
+        return $this->sites;
+    }
+
+    /**
+     * @param mixed $sites
+     */
+    public function setSites($sites)
+    {
+        $this->sites = $sites;
+    }
 
     /**
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=60, unique=true)
      */
-    private $username;
+//    protected $username;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", unique=true)
+     */
+    protected $googleID;
+
+    /**
+     * @return string
+     */
+    public function getGoogleID()
+    {
+        return $this->googleID;
+    }
+
+    /**
+     * @param string $googleID
+     */
+    public function setGoogleID($googleID)
+    {
+        $this->googleID = $googleID;
+    }
     /*
      * @ORM\Column(name="email', type="string", length=60, unique=true)
      */
-    private $email;
+ //   protected $email;
 
     /**
      * @return mixed
@@ -55,25 +101,25 @@ class User implements UserInterface
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;
+//    protected $password;
 
     /**
      * @var int
      *
      * @ORM\Column(name="state", type="integer")
      */
-    private $state;
+    protected $state;
 
     /**
      * @ORM\Column(name="last_connection", type="datetime", nullable=true)
      */
-    private $lastConnection;
+    protected $lastConnection;
 
     /**
      * @ORM\OneToOne(targetEntity="Role")
      * @ORM\JoinColumn(name="roles", referencedColumnName="id")
      */
-    private $roles;
+ //   protected $roles;
 
     /**
      * @return mixed
@@ -86,9 +132,9 @@ class User implements UserInterface
     /**
      * @param mixed $role
      */
-    public function setRoles($role)
+    public function setRoles(array $roles)
     {
-        $this->roles = $role;
+        $this->roles = $roles;
     }
 
     public function getSalt()
@@ -199,5 +245,28 @@ class User implements UserInterface
     {
         return $this->state;
     }
-}
 
+    /**
+     * Add site
+     *
+     * @param \AppBundle\Entity\Site $site
+     *
+     * @return User
+     */
+    public function addSite(\AppBundle\Entity\Site $site)
+    {
+        $this->sites[] = $site;
+
+        return $this;
+    }
+
+    /**
+     * Remove site
+     *
+     * @param \AppBundle\Entity\Site $site
+     */
+    public function removeSite(\AppBundle\Entity\Site $site)
+    {
+        $this->sites->removeElement($site);
+    }
+}

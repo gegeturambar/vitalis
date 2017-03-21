@@ -70,4 +70,3 @@ class Role implements RoleInterface
         return $this->name;
     }
 }
-
